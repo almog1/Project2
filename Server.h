@@ -7,13 +7,18 @@
 
 #include "ClientHandler.h"
 
-namespace server_side{
-    class Server{
+namespace server_side {
+    class Server {
+        int sockfd;
+        bool running;
     public:
+        //todo - make sure not needded virtual
+
         //open the server in the port and wait for the customer - connection
-        virtual void open(int port,ClientHandler clientHandler);
+        void open(int port, ClientHandler clientHandler);
+
         //close the server
-        virtual void close();
+        void close();
     };
 }
 

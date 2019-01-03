@@ -9,7 +9,10 @@
 
 using namespace server_side;
 
-class MySerialServer : public Server{
+class MySerialServer : public Server {
+    void open(int port, ClientHandler clientHandler);
+
+    void close();
 };
 
 #endif //PROJECT2_MYSERIALSERVER_H
