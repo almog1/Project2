@@ -5,7 +5,9 @@
 #include "FileCacheManager.h"
 
 template<class P, class S>
-bool FileCacheManager<P, S>::isSolutionExist(P prob) {}
+bool FileCacheManager<P, S>::isSolutionExist(P prob) {
+
+}
 
 template<class P, class S>
 S FileCacheManager<P, S>::getSolution(P prob) {}
