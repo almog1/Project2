@@ -6,18 +6,18 @@
 #define PROJECT2_CACHEMANAGER_H
 
 //interface for caching the solutions
+template<class P, class S>
 class CacheManager {
     //check if the solution exist in this cache
-    virtual bool isSoultionExist();
+    virtual bool isSolutionExist(P prob);
 
     //return the solution for this problem
-    template<typename Solution>
-    Solution getSolution();
+    virtual S getSolution(P prob);
     //todo check why cant virtual
 
     //save the specific solution in this cache
-    template<typename Solution>
-    void saveSolution();
+    //return true if success or false if not
+    virtual bool saveSolution(P prob, S sol);
 
 };
 

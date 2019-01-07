@@ -9,12 +9,15 @@
 #include "Solver.h"
 #include "CacheManager.h"
 
+//template <class P,class S>
 class MyTestClientHandler : public ClientHandler {
     //solver to solve this client
-    Solver<int, string> solver; //todo - change to real solution and problem instead of int and string
-
+    Solver<class P,class S> solver; //todo - change to real solution and problem instead of int and string
     //cache manager that the client will use
-    CacheManager *cacheManager;
+    CacheManager<P,S> cacheManager;
+public:
+    void handleClient(istream &input, ostream &output);
+
 };
 
 #endif //PROJECT2_MYTESTCLIENTHANDLER_H
