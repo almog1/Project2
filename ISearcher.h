@@ -15,14 +15,23 @@ template<class T>
 class ISearcher {
 protected:
     int costOfAllNodes = 0;
+    int nodesNumer = 0;
 public:
     //method for the search function - search in the searchable
     //update the number of nodes and return string of the path
-    virtual string search(ISearchable<T> *Isearchable);
+    //absrtact - because need to be implemented in every one differnetly
+
+    virtual string search(ISearchable<T> *Isearchable) = 0;
+
 
     //return the total cost of all the nodes in the path -
     // all the nodes evaluated
     virtual int getCostOfNodes();
+
+    //get the numebr of nodes
+    int numberOFNodes() {
+        return this->nodesNumer;
+    };
 };
 
 #endif //PROJECT2_ISEARCHER_H

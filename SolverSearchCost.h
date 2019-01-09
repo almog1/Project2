@@ -29,7 +29,7 @@ public:
     //get the problem - the Iserceher - the alogritm - and return the solution
     //the total cost of this path
     int *solve(ISearcher<T> *p) override {
-        //todo - serach in the Isearchable with the ISeracher - the algoritm and return the total cost
+        //todo - search in the Isearchable with the ISeracher - the algoritm and return the total cost
     }
 };
 
