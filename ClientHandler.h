@@ -11,9 +11,8 @@ using namespace std;
 
 class ClientHandler {
 public:
-    //get istream - to read the meassage from it
-    //get ostream to write the mesaage to it
-    virtual void handleClient(istream &input, ostream &output);
+    //get socket id to open it,read and write things to him
+    virtual void handleClient(int socketId) = 0;
 };
 
 #endif //PROJECT2_CLIENTHANDLER_H
