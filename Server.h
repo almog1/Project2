@@ -9,16 +9,15 @@
 
 namespace server_side {
     class Server {
-        int sockfd;
-        bool running;
+    protected:
+        bool shouldStop = false;
     public:
         //todo - make sure not needded virtual
-
         //open the server in the port and wait for the customer - connection
-        void open(int port, ClientHandler clientHandler);
+        virtual void open(int port, ClientHandler *clientHandler) = 0;
 
         //close the server
-        void close();
+        virtual void stop() = 0;
     };
 }
 

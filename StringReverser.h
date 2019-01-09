@@ -28,6 +28,7 @@ public:
 //        //return the new string
 //        return reverse;
 //    };
+    StringReverser(P prob, S sol);
 
 };
 
