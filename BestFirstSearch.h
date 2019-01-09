@@ -8,10 +8,11 @@
 #include "Searcher.h"
 
 //algoritm of searcher
-template <class T>
+template<class T>
 class BestFirstSearch : public Searcher<T> {
 public:
-    string search(ISearchable<T> *Isearchable) override {
+    //we want to search by this searcher  in the searchable
+    string search(ISearchable<T> *Isearchable)  {
 
     }
 };
