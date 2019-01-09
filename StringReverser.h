@@ -9,13 +9,15 @@
 #include <string>
 
 using std::string;
-template <class P,class S>
+
+//template <class P,class S>
 class StringReverser : public Solver<string, string> {
 public:
-    StringReverser(){
+    StringReverser() {
 
     };
 
+    string solve(string p);
 //    string solve(string p){
 //      //  need to revers the string
 //        int i = 0;
@@ -28,7 +30,7 @@ public:
 //        //return the new string
 //        return reverse;
 //    };
-    StringReverser(P prob, S sol);
+    //  StringReverser(P prob, S sol);
 
 };
 

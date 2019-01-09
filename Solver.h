@@ -12,7 +12,7 @@ public:
 
     };
     //Solver(Problem prob, Solution sol);
-    virtual Solution* solve(Problem* p);
+    virtual Solution solve(Problem p){};
 };
 
 #endif //PROJECT2_SOLVER_H
