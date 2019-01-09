@@ -10,7 +10,7 @@
 template<class P, class S>
 class StringReverser : public Solver<P, S> {
 public:
-    StringReverser(P prob, S sol);
+    //StringReverser(P prob, S sol);
 
 };
 

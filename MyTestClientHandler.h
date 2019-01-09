@@ -16,7 +16,8 @@ class MyTestClientHandler : public ClientHandler {
     //cache manager that the client will use
     CacheManager<P,S> cacheManager;
 public:
-    void handleClient(istream &input, ostream &output);
+
+  //  void handleClient(istream &input, ostream &output);
 
 };
 

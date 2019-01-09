@@ -1,0 +1,8 @@
+//
+// Created by almogg on 1/9/19.
+//
+
+#ifndef PROJECT2_SOLVERSEARCHCOST_H
+#define PROJECT2_SOLVERSEARCHCOST_H
+
+#endif //PROJECT2_SOLVERSEARCHCOST_H
