@@ -6,11 +6,18 @@
 #define PROJECT2_STRINGREVERSER_H
 
 #include "Solver.h"
+#include <string>
 
-template<class P, class S>
-class StringReverser : public Solver<P, S> {
+using std::string;
+
+//template <class P,class S>
+class StringReverser : public Solver<string, string> {
 public:
-    StringReverser(P prob, S sol);
+    StringReverser() {
+
+    };
+
+    string solve(string p);
 
 };
 

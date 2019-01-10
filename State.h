@@ -34,8 +34,14 @@ public:
 
     //check if the states are equal
     bool equals(State<T> *state) {
-
+        //compare
+        if (this->myState == state->getState()) {
+            return true;
+        } else {
+            return false;
+        }
     };
+
 
     ~State() {
 
