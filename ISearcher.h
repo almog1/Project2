@@ -23,7 +23,6 @@ public:
 
     virtual string search(ISearchable<T> *Isearchable) = 0;
 
-
     //return the total cost of all the nodes in the path -
     // all the nodes evaluated
     virtual int getCostOfNodes();

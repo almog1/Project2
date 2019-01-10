@@ -5,6 +5,7 @@
 #include "StringReverser.h"
 //#include "Solver.h"
 #include "Point.h"
+#include "FileCacheManager.h"
 
 using namespace std;
 
@@ -17,14 +18,14 @@ int main() {
     State<string> *st = new State<string>("almog");
     State<string> *st2 = new State<string>("chagit");
     State<string> *st3 = new State<string>("3");
-    State<string> * st4 = new State<string>("3");
+    State<string> *st4 = new State<string>("3");
     st->setFrom(st2);
     st2->setFrom(st3);
     State<string> *fromState = st->getFrom();
     State<string> *from2 = st->getFrom()->getFrom();
 
-    if(st4->equals(st3) == true){
-        cout<<"equal"<<endl;
+    if (st4->equals(st3) == true) {
+        cout << "equal" << endl;
     }
     cout << st->getState() << endl;
     cout << fromState->getState() << endl;
@@ -35,6 +36,10 @@ int main() {
     cout << "before " << stBe << endl;
     string stN = stringRe->solve(stBe);
     cout << "after " << stN << endl;
+
+
+    //CacheManager<string, int> *ch = new FileCacheManager<string, int>("test.txt", 2);
+    CacheManager<string, string> *cacheManager = new FileCacheManager<string,string>("almog","check");
 
     return 0;
 }

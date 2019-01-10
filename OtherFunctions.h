@@ -7,8 +7,20 @@
 
 //for all other functions
 
-class OtherFunctions {
+#include <string>
+#include <sstream>
 
-};
+using namespace std;
+
+//get a template object and return its string value
+template<class T>
+string tempToString(T temp) {
+    ostringstream myObjectStream; // a stream is built
+    myObjectStream << temp; // the stream is filled
+
+    string mySerializedObject = myObjectStream.str();
+
+    return mySerializedObject;
+}
 
 #endif //PROJECT2_OTHERFUNCTIONS_H

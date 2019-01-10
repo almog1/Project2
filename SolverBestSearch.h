@@ -15,7 +15,7 @@ using std::vector;
 //get a searchable and list of all searchers - and return a new Isearcher
 //of the fastest alogritm - the less cost
 template<class T>
-class SolverBestSearch : public Solver<ISearchable<T>, ISearcher<T>> {
+class SolverBestSearch : public Solver<ISearchable<T>, string> {
 protected:
     ISearchable<T> *iSearchable;
     ISearcher<T> *iSearcher;
@@ -28,8 +28,12 @@ public:
     };
 
     //get the problem - the Isearcble - and return the solution
-    ISearcher<T> *solve(ISearchable<T> *p) override {
+    //the solution is the best search path
+    string solve(ISearchable<T> p) override {
         //todo need to run on all the searchers and compare  between the cost of each
+
+        //minimum - the best - save
+        //todo to print to file the cost of each
     }
 
 
