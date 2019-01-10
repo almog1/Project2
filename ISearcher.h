@@ -27,7 +27,7 @@ public:
     // all the nodes evaluated
     virtual int getCostOfNodes();
 
-    //get the numebr of nodes
+    virtual //get the numebr of nodes
     int numberOFNodes() {
         return this->nodesNumer;
     };

@@ -33,7 +33,7 @@ public:
         return this->costOfAllNodes;
     }
 
-    //return the next state in the queue
+    virtual //return the next state in the queue
     State<T> *popList() {
         this->nodesNumer++; //plus one to the nodes we been
         //check not empty

@@ -11,6 +11,7 @@
 #include <map>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -18,115 +19,81 @@ template<class P, class S>
 //cache manager of files
 class FileCacheManager : public CacheManager<P, S> {
     //map between problem and solution
-    // map<P, S> cache;
+    map<P, S> cache;
+    string path;
+    int oldSize;
 public:
     //constructor of a new file cache manager
     //get a path of the file
+    //put in the map all the cache from the file
     FileCacheManager(string path, P prob) {
-        //need to take all the solution from the file
-        //prob.to_string();
-        //prob.to_string();
-        int num = 5;
-        //std::string st = to_string(prob);
+        this->path = path;
 
-        string str = tempToString(prob);
+        //read from file
+        P problem;
+        S solution;
+        this->oldSize = 0;
 
-        cout << str << endl;
+        //check if the file exist
+        ifstream ifs(this->path);
+        if (ifs.is_open()) {
+            //while file isn't over
+            while (!ifs.eof()) {
+                //problem and solution seperate by '$'
+                //take the problem
+                ifs >> problem;
+                ifs >> solution;
 
+                cache.insert(pair<P,S>(problem,solution));
+            }
+
+            this->oldSize = cache.size(); //save the old size
+
+            //close the file
+            ifs.close();
+        }
     };
 
     bool isSolutionExist(P prob) override {
+        //check the map
+        typename ::map<P,S>::iterator it = this->cache.find(prob);
 
+        //if its not the end - have the solution
+        if(it!=this->cache.end()){
+            return true; //the solution exist
+        }else{
+            return false; // solution not exist
+        }
 
     };
 
     S getSolution(P prob) override {
+        typename ::map<P,S>::iterator it = this->cache.find(prob);
 
+        //if its not the end - have the solution
+        if(it!=this->cache.end()){
+            return (*it).second; // the solution from the table
+        }
     };
 
+    //save all the problems with solution that wasnt in the file
     bool saveSolution(P prob, S sol) override {
+        //put it in the map
+        //todo - maybe don't need it becaue use juse once
+        this->cache.insert(pair<P,S>(prob,sol));
 
+        ofstream ofs;
+
+        //open the file for writing without delete the old
+        ofs.open(path, ofstream::out | ofstream::app);
+
+        //put the prob and solution in the file
+        //to be working - have to make sure every prob and sol have << operator
+        ofs << prob << " " << sol << "\n";
+
+        //close the file
+        ofs.close();
     };
-    //write to file
-//    ofstream ofs;
-//    ofs.open(EMLOYEE_DATE, ofstream::out | ofstream::app);
-//
-//    ofs << this->emloyeeId << "," << (*this->date).getDate() << "\n";
-//
-//    ofs.close();
-
-
-//READ
-/*
- * MyReservation::MyReservation(string line) {
-    stringstream temp(line);
-    //create from the line
-    string segment;
-    std::vector<std::string> seglist;
-    //split by ","
-    while (getline(temp, segment, ',')) {
-        seglist.push_back(segment);
-    }
-    this->myId = seglist.at(0);
-    this->customerId = seglist.at(1);
-    this->flightId = seglist.at(2);
-    this->classes = checkClass(seglist.at(3));
-
-    //take out the \n
-    stringstream test(seglist.at(4));
-    getline(test, segment, '\n');
-    this->maxBaggage = stoi(segment);
-
-}
-
-void MyReservation::writeToFile() {
-    ofstream ofs;
-    ofs.open(RESERVATION_FILE, ofstream::out | ofstream::app);
-
-    ofs << this->getID() << "," << this->customer->getID() << "," << this->flight->getID() << ","
-        << this->getClass() << ","
-        << this->getMaxBaggage() << "\n";
-
-    ofs.close();
-
-}
- *
- * */
-
-
-
-/***READ
- *  string line;
-    //check if the file exist
-    ifstream ifs(RESERVATION_FILE);
-    if (ifs.is_open()) {
-        //take a string of line
-        while (getline(ifs, line)) {
-            //add to the list all the planes
-            this->reservations.push_back(new MyReservation(line));
-        }
-        //take the last one id
-        this->reservations.back()->setResId(this->reservations.back()->getID());
-
-        //keep the old size of the list
-        oldSize[RESERVATION_FLAG] = this->reservations.size();
-        ifs.close();
-    }
-    //run on all the reservations and put id
-    list<MyReservation *>::iterator it;
-
-    //check not empty
-    if (this->reservations.empty() == false) {
-        //need to run on the reservations and change the customer and flight
-        for (it = this->reservations.begin(); it != this->reservations.end(); it++) {
-            //get the customer and flight by the ids
-            (*it)->setCustomer(this->getCustomer((*it)->getCustomerId()));
-            (*it)->setFlight(this->getFlight((*it)->getFlightId()));
-        }
-    }
-    //flag of reading from employees
-    isLoad[RESERVATION_FLAG] = true;
- * */
 };
 
 #endif //PROJECT2_FILECACHEMANAGER_H

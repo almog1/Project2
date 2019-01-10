@@ -39,7 +39,16 @@ int main() {
 
 
     //CacheManager<string, int> *ch = new FileCacheManager<string, int>("test.txt", 2);
-    CacheManager<string, string> *cacheManager = new FileCacheManager<string,string>("almog","check");
+    CacheManager<string, string> *cacheManager = new FileCacheManager<string,string>("/home/almogg/CLionProjects/Project2/testFile","check");
+    cacheManager->saveSolution("problem1","solution1");
+    cacheManager->saveSolution("problem2","solution2");
+   if( cacheManager->isSolutionExist("problem1") == true){
+       cout<<"solution from cache is "<<cacheManager->getSolution("problem1")<<endl;
+   }
+    if( cacheManager->isSolutionExist("problem2") == true){
+        cout<<"solution from cache is "<<cacheManager->getSolution("problem2")<<endl;
+    }
+
 
     return 0;
 }
