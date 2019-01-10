@@ -12,6 +12,10 @@
 #include "Solver.h"
 #include "CacheManager.h"
 
+#define BUFF_SIZE 256
+#define ONE 1
+#define ZERO 0
+
 template<class P, class S>
 //read from the client line after line and between each line wait to response
 class MyTestClientHandler : public ClientHandler {
@@ -25,13 +29,13 @@ public:
 
     void handleClient(int socketId) override {
         //our buffer that read the message
-        char prob[256];
+        char prob[BUFF_SIZE];
         string solution;
         ssize_t n;
         char *chr;
 
         //check if the id socket is correct
-        if (socketId < 0) {
+        if (socketId < ZERO) {
             perror("ERROR on accept");
             exit(1);
         }
@@ -39,16 +43,18 @@ public:
         //if connection is established start to communicate
         while (true) {
             //clean the buffer - put 0 in all of him
-            bzero(prob, 256);
+            bzero(prob, BUFF_SIZE);
             //read data from the buffer
-            n = read(socketId, prob, 255);
+            n = read(socketId, prob, BUFF_SIZE - 1);
             //check if we get something in from the read function
-            if (n < 0) {
+            if (n < ZERO) {
                 perror("ERROR reading from socket");
-                exit(1);
+                exit(ONE);
             }
             //if we got to the end of the problem
-            if (strcmp(prob, "end") == 0) {
+            if ((strcmp(prob, "end")) == ZERO) {
+                cout << prob << endl;
+                exit(ZERO);
                 return;
             }
 
@@ -56,25 +62,25 @@ public:
 
             //get solution from disk
             //if there are solution to the problem
-//            if (this->cacheManager->hasSolution(prob)) {
-//                solution = this->cacheManager->getSolution(prob);
-//            } else {
-//                solution = solver->solve(prob);
-//                cacheManager->updateData(prob,solution);
-//                cacheManager->writeToFile(prob, solution);
-//            }
+            if (this->cacheManager->hasSolution(prob)) {
+                solution = this->cacheManager->getSolution(prob);
+            } else {
+                solution = solver->solve(prob);
+                cacheManager->updateData(prob,solution);
+                cacheManager->writeToFile(prob, solution);
+            }
 
-            solution="olleh";
+            solution = "olleh";
             //write a response to the client
             chr = const_cast<char *>(solution.c_str());
             //write the solution to the buffer
             n = write(socketId, chr, strlen(chr));
-            cout<<solution<<endl;
+            cout << solution << endl;
 
             //check if the write successed
-            if (n < 0) {
+            if (n < ZERO) {
                 perror("ERROR writing to socket");
-                exit(1);
+                exit(ONE);
             }
         }
     }

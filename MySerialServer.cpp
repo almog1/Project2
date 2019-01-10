@@ -41,33 +41,14 @@ void MySerialServer::serialService(int sockfd, ClientHandler* clientHandler) {
     int newsockfd, clilen;
     struct sockaddr_in cli_addr;
 
-    timeval timeout;
-    timeout.tv_sec = 10;
-    timeout.tv_usec = 0;
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-
     //todo timeout
+
+
     while (true) {
-        int newSocket;
         listen(sockfd, TIME);
         clilen = sizeof(cli_addr);
-        //accept actual connection from the client
-        newSocket = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
-
-        //check if suceeded in exepting the connection
-        if (newSocket < 0)	{
-            if (errno == EWOULDBLOCK)	{
-                cout << "timeout!" << endl;
-                exit(2);
-            }	else	{
-                perror("other error");
-                exit(3);
-            }
-        }
+        newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
         clientHandler->handleClient(newsockfd);
-
-        close(newSocket);
-        close(sockfd);
     }
 }
 
