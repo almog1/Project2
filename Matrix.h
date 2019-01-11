@@ -20,8 +20,7 @@ public:
     }
 
     //get the possible moves in a current state of the matrix
-    vector<State<Point> *> getNeighbors(State<Point> *s) override;
-
+    vector<State<Point> *> getAllPossibleStates(State<Point> *currentState) override;
 
 };
 

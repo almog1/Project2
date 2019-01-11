@@ -30,10 +30,8 @@ public:
         return this->goalState;
     }
 
-    //get the structure of our problem
-    virtual vector<State<T> *> getAllPossibleStates() {
-        return this->structure;
-    }
+    //get the possible moves to the next step
+    virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) =0;
 
     //apply the structure that we got from the user - our problem
     void setStructure(vector<State<T> *> structure) {
@@ -49,9 +47,6 @@ public:
     void setGoalState(State<T> *goalState) {
         this->goalState = goalState;
     }
-
-    //get our possibles for the next move
-    virtual vector<State<T> *> getNeighbors(State<T> *s) = 0;
 
     //todo check how to do it using open-close
     //get the string of our way to the end

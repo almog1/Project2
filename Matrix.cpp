@@ -15,8 +15,8 @@
 //}
 
 //return a list of all the neighbors possible in the next step
-vector<State<Point> *> Matrix::getNeighbors(State<Point> *currentState) {
-    vector<State<Point> *> neighbors;
+vector<State<Point> *> Matrix::getAllPossibleStates(State<Point> *currentState) {
+    vector<State<Point> *> possible;
     for (State<Point> *futureState : structure) {
         //state is the point we check according to him on our current state point
         if (futureState->getState().isLeftNeighbor(currentState->getState()) ||
@@ -24,9 +24,9 @@ vector<State<Point> *> Matrix::getNeighbors(State<Point> *currentState) {
             futureState->getState().isUpNeighbor(currentState->getState()) ||
             futureState->getState().isDownNeighbor(currentState->getState())) {
             if (futureState->getCost() != -1) {
-                neighbors.push_back(futureState);
+                possible.push_back(futureState);
             }
         }
     }
-    return neighbors;
+    return possible;
 }
