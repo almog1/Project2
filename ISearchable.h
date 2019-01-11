@@ -22,10 +22,16 @@ public:
     virtual State<T> *getGoalState() = 0;
 
     //return all the possible states - the structure in a vector
-    virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) = 0;
+    virtual vector<State<T> *> getAllPossibleStates() = 0;
 
-    //return all the possible states in a vetcor
-    virtual vector<State<T> *> getAllPossibleStates();
+    //update the searchable that we want
+    virtual void setStructure(vector<State<T> *> structure) = 0;
+
+    //set the initial state of the searchable item
+    virtual void setInitialState(State<T> *initialState) = 0;
+
+    //set the goal state of the searchable item
+    virtual void setGoalState(State<T> *goalState) = 0;
 
     //todo - check if need pointer to vector
 };
