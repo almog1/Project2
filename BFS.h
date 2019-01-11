@@ -36,7 +36,7 @@ public:
             if (state->equals(Isearchable->getGoalState())) {
                 return "path";
             }
-            list<State<T> *> next;
+            vector<State<T> *> next;
             next = Isearchable->getAllPossibleStates(state);
             for (it = next.begin(); it != next.end(); it++) {
                 //if not in closed list
