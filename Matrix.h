@@ -6,21 +6,22 @@
 #define PROJECT2_MATRIX_H
 
 #include "Searchable.h"
+#include "Point.h"
+#include <vector>
+using std::vector;
 
-template<class T>
-class Matrix : public Searchable<T> {
+class Matrix : public Searchable<Point> {
 public:
-    State<T> *getInitializeState() override {
-        return nullptr;
+    //the constructor of the matrix
+    Matrix(vector<State<Point>*> structure, State<Point>* initialState,State<Point>* goal){
+        this->goalState=goal;
+        this->initialState=initialState;
+        this->structure=structure;
     }
 
-    State<T> *getGoalState() override {
-        return nullptr;
-    }
+    //get the possible moves in a current state of the matrix
+    vector<State<Point> *> getAllPossibleStates(State<Point> *currentState) override;
 
-    vector<State<T> *> getAllPossibleStates() override {
-        return vector<State<T> *>();
-    }
 };
 
 #endif //PROJECT2_MATRIX_H

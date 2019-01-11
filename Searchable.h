@@ -6,14 +6,77 @@
 #define PROJECT2_SEARCHABLE_H
 
 #include "ISearchable.h"
+#include <algorithm>
+#include <vector>
+#include <string>
+
+using std::vector;
+using std::string;
 
 template<class T>
 class Searchable : public ISearchable<T> {
+protected:
+    std::vector<State<T> *> structure;
+    State<T> *initialState;
+    State<T> *goalState;
 public:
-    virtual State<T> *getInitializeState() = 0;
+    //return the initialize state of our 'problem'
+    virtual State<T> *getInitializeState() {
+        return this->initialState;
+    }
 
-    virtual State<T> *getGoalState() = 0;
+    //return the goal state of our 'problem'
+    virtual State<T> *getGoalState() {
+        return this->goalState;
+    }
 
+    //get the possible moves to the next step
+    virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) =0;
+
+    //apply the structure that we got from the user - our problem
+    void setStructure(vector<State<T> *> structure) {
+        this->structure = structure;
+    }
+
+    //set the initial state of the searchable item
+    void setInitialState(State<T> *initialState) {
+        this->initialState = initialState;
+    }
+
+    //set the goal state of the searchable item
+    void setGoalState(State<T> *goalState) {
+        this->goalState = goalState;
+    }
+
+    //todo check how to do it using open-close
+    //get the string of our way to the end
+    string getRoute() {
+        //the route is from the end to the begining
+        State<T> *current = getGoalState();
+        string path="";
+        //end when getting to the start
+        while (current->getComaFrom() != nullptr) {
+            //go on the state of your structure
+            for (State<T> *state:structure) {
+                if (state->getComaFrom() != nullptr) {
+                    //find father node of current
+                    if (current->getFrom()->equals(state)) {
+                        path += current->getState().move(state->getState());
+                        break;
+                    }
+                }
+            }
+            current = current->getComaFrom();
+            //when the current is the initial state
+            if (current->getFrom()->equals(getInitializeState())) {
+                break;
+            }
+        }
+        //find the last move to the initial state
+        path += current->getState().move(getInitializeState()->getState());
+        reverse(path.begin(), path.end());
+        return path;
+    }
     virtual vector<State<T> *> getAllPossibleStates(State<T>* state) = 0;
 };
 
