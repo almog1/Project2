@@ -16,13 +16,22 @@ template<class T>
 class ISearchable {
 public:
     //get the initialize state - the source
-    virtual State<T> *getInitializeState();
+    virtual State<T> *getInitializeState() = 0;
 
     //return the goal state - the detination state
-    virtual State<T> *getGoalState();
+    virtual State<T> *getGoalState() = 0;
 
-    //return all the possible states in a vetcor
-    virtual vector<State<T> *> getAllPossibleStates();
+    //return all the possible states - the structure in a vector
+    virtual vector<State<T> *> getAllPossibleStates() = 0;
+
+    //update the searchable that we want
+    virtual void setStructure(vector<State<T> *> structure) = 0;
+
+    //set the initial state of the searchable item
+    virtual void setInitialState(State<T> *initialState) = 0;
+
+    //set the goal state of the searchable item
+    virtual void setGoalState(State<T> *goalState) = 0;
 
     //todo - check if need pointer to vector
 };

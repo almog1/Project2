@@ -62,15 +62,13 @@ public:
 
             //get solution from disk
             //if there are solution to the problem
-            if (this->cacheManager->hasSolution(prob)) {
+            if (this->cacheManager->isSolutionExist(prob)) {
                 solution = this->cacheManager->getSolution(prob);
             } else {
                 solution = solver->solve(prob);
-                cacheManager->updateData(prob,solution);
-                cacheManager->writeToFile(prob, solution);
+                cacheManager->saveSolution(prob,solution);
             }
 
-            solution = "olleh";
             //write a response to the client
             chr = const_cast<char *>(solution.c_str());
             //write the solution to the buffer

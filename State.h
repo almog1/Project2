@@ -9,13 +9,16 @@ template<class T>
 class State {
 private:
     T myState;
-    double cost; //how much cost to reach this state
+    double cost;//current cost
+    double trailcost; //how much cost to reach this state
     State<T> *from;//the state we came from to this state
 public:
-    //constructor
+    //constructors
     State(T state) {
         this->myState = state;
     };
+
+    State(T myState, double trailcost, State<T> *from) : myState(myState), trailcost(trailcost), from(from) {}
 
     //return the state T
     T getState() {
@@ -42,12 +45,28 @@ public:
         }
     };
 
+    double getTrailcost() const {
+        return trailcost;
+    }
 
+    void setTrailcost(double trailcost) {
+        State::trailcost = trailcost;
+    }
+
+    //get the cost of the current state
+    double getCost() const {
+        return cost;
+    }
+
+    //initialize our cost for the current path
+    void setCost(double cost) {
+        State::cost = cost;
+        State::trailcost=trailcost;
+    }
+
+    //destructor
     ~State() {
-
     };
-//get the state from this state
-//   void setFromState(State<T> other); //set the from state - from where we got to this state
 };
 
 #endif //PROJECT2_STATE_H
