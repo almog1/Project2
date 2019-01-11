@@ -22,7 +22,7 @@ public:
     virtual State<T> *getGoalState();
 
     //return all the possible states in a vetcor
-    virtual vector<State<T> *> getAllPossibleStates();
+    virtual vector<State<T> *> getAllPossibleStates(State<T> * state);
 
     //todo - check if need pointer to vector
 };

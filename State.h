@@ -9,7 +9,7 @@ template<class T>
 class State {
 private:
     T myState;
-    double cost; //how much cost to reach this state
+    int cost; //how much cost to reach this state
     State<T> *from;//the state we came from to this state
 public:
     //constructor
@@ -42,6 +42,10 @@ public:
         }
     };
 
+    int valueOfState(){
+        //return the value of this state
+        return this->cost;
+    }
 
     ~State() {
 
