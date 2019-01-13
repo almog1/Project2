@@ -33,6 +33,7 @@ public:
     //set the goal state of the searchable item
     virtual void setGoalState(State<T> *goalState) = 0;
 
+
     //todo - check if need pointer to vector
 };
 
