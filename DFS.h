@@ -11,117 +11,64 @@
 #include<list>
 
 using std::stack;
+using std::list;
 
-//template<class T>
-//class DFS : public Searcher<T> {
-//    stack<State<T>> currentNodes;
-//    string path;
-//
-//public:
-//
-//    // An Iterative C++ program to do DFS traversal from
-//// a given source vertex. DFS(int s) traverses vertices
-//// reachable from s.
-//#include<bits/stdc++.h>
-//using namespace std;
 
-// This class represents a directed graph using adjacency
-// list representation
+template<class T>
+class DFS : public Searcher<T> {
+    stack<State<T>> currentNodes;
+    string path;
+    vector<State<T> *> openVector;
+    vector<State<T> *> closedVector;
+    bool found;
+public:
+    string dfsSeacrhRecurs(ISearchable<State<T>> *Isearchable) {
+        //as long the open vector have items
+        while (this->openVector.empty() == false) {
+            State<T> *state = this->openVector.pop_back(); //take from the open
+            this->closedVector.push_back(state); //add it to the closed list
+            this->costOfAllNodes += state->valueOfState(); //add the value of this state to the values
 
-//class Graph
-//{
-//    int V; // No. of vertices
-//    list<int> *adj; // adjacency lists
-//public:
-//    Graph(int V); // Constructor
-//    void addEdge(int v, int w); // to add an edge to graph
-//    void DFS(int s); // prints all vertices in DFS manner
-//    // from a given source.
-//};
-//
-//Graph::Graph(int V)
-//{
-//    this->V = V;
-//    adj = new list<int>[V];
-//}
-//
-//void Graph::addEdge(int v, int w)
-//{
-//    adj[v].push_back(w); // Add w to v’s list.
-//}
-//
-//// prints all not yet visited vertices reachable from s
-//void Graph::DFS(int s)
-//{
-//    // Initially mark all verices as not visited
-//    vector<bool> visited(V, false);
-//
-//    // Create a stack for DFS
-//    stack<int> stack;
-//
-//    // Push the current source node.
-//    stack.push(s);
-//
-//    while (!stack.empty())
-//    {
-//        // Pop a vertex from stack and print it
-//        s = stack.top();
-//        stack.pop();
-//
-//        // Stack may contain same vertex twice. So
-//        // we need to print the popped item only
-//        // if it is not visited.
-//        if (!visited[s])
-//        {
-//            cout << s << " ";
-//            visited[s] = true;
-//        }
-//
-//        // Get all adjacent vertices of the popped vertex s
-//        // If a adjacent has not been visited, then puah it
-//        // to the stack.
-//        for (auto i = adj[s].begin(); i != adj[s].end(); ++i)
-//            if (!visited[*i])
-//                stack.push(*i);
-//    }
-//}
-//
-//// Driver program to test methods of graph class
-//int main()
-//{
-//    Graph g(5); // Total 5 vertices in graph
-//    g.addEdge(1, 0);
-//    g.addEdge(0, 2);
-//    g.addEdge(2, 1);
-//    g.addEdge(0, 3);
-//    g.addEdge(1, 4);
-//
-//    cout << "Following is Depth First Traversal\n";
-//    g.DFS(0);
-//
-//    return 0;
-//}
-//
-//
-//int numberOFNodes() override {
-//        return ISearcher::numberOFNodes();
-//    }
-//
-//    DFS() {
-//
-//    }
-//
-//    string search(ISearchable<T> *Isearchable) override {
-//        return std::__cxx11::string();
-//    }
-//
-//    int getCostOfNodes() override {
-//        return Searcher::getCostOfNodes();
-//    }
-//
-//    State<T> *popList() override {
-//        return Searcher::popList();
-//    }
-//};
+            //todo - if the value is needed - int value - maybe need state val
+            //    this->costOfAllNodes += state->getState(); //add its cost
+
+            //check if it is the goal state
+            if (state->equals(Isearchable->getGoalState())) {
+                //return the path
+                this->found = true;
+                return "path";
+                //maybe the path is the closed list
+                //todo path return need to check where function for it
+            } else {
+                //take all the possible states he can go to
+                vector<State<T> *> statesToOpen = Isearchable->getAllPossibleStates(state);
+
+                typename vector<State<T> *>::iterator it;
+                for (it = statesToOpen.begin(); it != statesToOpen.end(); it++) {
+                    //check its not in the colsed list - alredy been there
+                    if (find(this->closedVector.begin(), this->closedVector.end(), (*it)) == this->closedVector.end()) {
+                        //its not in the closed list
+                        //take the state and do it in this state
+                        return dfsSeacrhRecurs(Isearchable);
+                    }
+                }
+            }
+        }
+        //if not found path to there
+        if (this->found == false) {
+            return "-1";
+        }
+    }
+
+    //search in the searchable
+    string search(ISearchable<T> *Isearchable) override {
+        //take the init state from the searchable
+        //vector<State<T> *> openList;
+        this->openVector.push_back(Isearchable->getInitializeState());
+        this->found = false;
+        string solPath = dfsSeacrhRecurs(Isearchable);
+
+    }
+};
 
 #endif //PROJECT2_DFS_H

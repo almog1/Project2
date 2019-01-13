@@ -22,7 +22,7 @@ public:
     virtual State<T> *getGoalState() = 0;
 
     //return all the possible states - the structure in a vector
-    virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) = 0;
+    virtual vector<State<T> *> getAllPossibleStates() = 0;
 
     //update the searchable that we want
     virtual void setStructure(vector<State<T> *> structure) = 0;

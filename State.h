@@ -11,6 +11,7 @@ private:
     T myState;
     double cost;//current cost
     double trailcost; //how much cost to reach this state
+    //int cost; //how much cost to reach this state
     State<T> *from;//the state we came from to this state
 public:
     //constructors
@@ -51,6 +52,10 @@ public:
 
     void setTrailcost(double trailcost) {
         State::trailcost = trailcost;
+    }
+    int valueOfState(){
+        //return the value of this state
+        return this->cost;
     }
 
     //get the cost of the current state

@@ -77,6 +77,7 @@ public:
         reverse(path.begin(), path.end());
         return path;
     }
+//    virtual vector<State<T> *> getAllPossibleStates(State<T>* state) = 0;
 };
 
 #endif //PROJECT2_SEARCHABLE_H
