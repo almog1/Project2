@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+
 using std::string;
 using std::ostream;
 
@@ -38,7 +39,7 @@ public:
     bool equal(Point other);
 
     //return true if one point equals to another one
-   // bool operator==(Point* other);
+    bool operator==(Point other);
 
     //return 'true' if the other point is left neighbor
     bool isLeftNeighbor(Point other);
@@ -55,12 +56,8 @@ public:
     //get the type step that we did
     string getMove(Point other);
 
-    friend ostream & operator<<(ostream& out, const Point& point){
-        out<<"("<<point.x<<","<<point.getY()<<")";
-        return out;
-    };
-
-
+    //print a point using ostream
+    friend ostream &operator<<(ostream &out, const Point &point);
 };
 
 #endif //PROJECT2_POINT_H

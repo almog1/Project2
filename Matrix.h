@@ -24,6 +24,8 @@ public:
     //get the possible moves in a current state of the matrix
     vector<State<Point> *> getAllPossibleStates(State<Point> *currentState) override;
 
+    string getRoute() override;
+
 };
 
 #endif //PROJECT2_MATRIX_H

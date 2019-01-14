@@ -32,3 +32,29 @@ vector<State<Point> *> Matrix::getAllPossibleStates(State<Point> *currentState) 
 }
 
 Matrix::Matrix() {}
+
+string Matrix::getRoute() {
+    State<Point> *current = getGoalState();
+    string path = "}";
+    //end when getting to the start
+    while (current->getFrom() != nullptr) {
+        //go on the state of your structure
+        for (State<Point> *state:structure) {
+            if (state->getFrom() != nullptr) {
+                //find father node of current
+                if (current->getFrom()->equals(state)) {
+                    path = "," + current->getState().getMove(state->getState()) + path;
+                    break;
+                }
+            }
+        }
+        current = current->getFrom();
+        //when the current is the initial state
+        if (current->getFrom()->equals(getInitializeState())) {
+            break;
+        }
+    }
+    //find the last move to the initial state
+    path = "{" + current->getState().getMove(getInitializeState()->getState()) + path;
+    return path;
+}
