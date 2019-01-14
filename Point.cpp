@@ -38,22 +38,32 @@ bool Point::equal(Point other) {
 
 //return 'true' if the other point is left neighbor
 bool Point::isLeftNeighbor(Point other) {
-    return this->x == other.getX() && this->y == (other.getY() - 1);
+    if (this->x == other.getX() && this->y == (other.getY() - 1)) return true;
+    return false;
 }
 
 //return 'true' if the other point is right neighbor
 bool Point::isRightNeighbor(Point other) {
-    return this->x == other.getX() && this->y == (other.getY() + 1);
+    if (this->x == other.getX() && this->y == (other.getY() + 1)) return true;
+    return false;
 }
 
 //return 'true' if the other point is up neighbor
 bool Point::isUpNeighbor(Point other) {
-    return this->x == (other.getX() - 1) && this->y == other.getY();
+    if (this->x == (other.getX() - 1) && this->y == other.getY())return true;
+    return false;
 }
 
 //return 'true' if the other point is down neighbor
 bool Point::isDownNeighbor(Point other) {
-    return this->x == (other.getX() + 1) && this->y == other.getY();
+    if (this->x == (other.getX() + 1) && this->y == other.getY())return true;
+    return false;
+}
+
+//return true if one point equals to another one
+bool Point::operator==(Point other) {
+    if (this->x == other.x && this->y == other.y)return true;
+    return false;
 }
 
 //get the type step that we did

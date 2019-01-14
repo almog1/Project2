@@ -33,6 +33,9 @@ public:
     //return true if both points equals-else otherwise
     bool equal(Point other);
 
+    //return true if one point equals to another one
+    bool operator==(Point other);
+
     //return 'true' if the other point is left neighbor
     bool isLeftNeighbor(Point other);
 
@@ -47,6 +50,8 @@ public:
 
     //get the type step that we did
     string getMove(Point other);
+
+
 
 
 };

@@ -119,25 +119,24 @@ public:
 
         //create the matrix with all her variables
         ISearchable<Point> * mat = new Matrix(searchable, initialState, goalState);
-        mat->getAllPossibleStates((mat->getStructure())[1]);
 
         //check if there is a solution for the problem
-//        if (this->cacheManager->isSolutionExist(mat)) {
-//            solution = this->cacheManager->getSolution(mat);
-//        } else {
-//            solution = solver->solve(mat);
-//            cacheManager->saveSolution(mat,solution);
-//        }
-//
-//        // write a response to the client
-//        chr = const_cast<char *>(solution.c_str());
-//        n = write(socketId, chr, strlen(chr));
-//        cout << "in myclienthandler:" + solution << endl;
-//
-//        if (n < 0) {
-//            perror("ERROR writing to socket");
-//            exit(1);
-//        }
+        if (this->cacheManager->isSolutionExist(mat)) {
+            solution = this->cacheManager->getSolution(mat);
+        } else {
+            solution = solver->solve(mat);
+            cacheManager->saveSolution(mat,solution);
+        }
+
+        // write a response to the client
+        chr = const_cast<char *>(solution.c_str());
+        n = write(socketId, chr, strlen(chr));
+        cout << "in myclienthandler:" + solution << endl;
+
+        if (n < 0) {
+            perror("ERROR writing to socket");
+            exit(1);
+        }
     }
 
 };
