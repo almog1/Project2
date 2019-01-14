@@ -13,6 +13,10 @@ class BestFirstSearch : public Searcher<T> {
 public:
     //we want to search by this searcher  in the searchable
     string search(ISearchable<T> *Isearchable)  {
+        //cost of a specific node from the start
+        int costNodeFromStart=0;
+
+
 
     }
 };
