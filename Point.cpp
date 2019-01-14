@@ -61,10 +61,10 @@ bool Point::isDownNeighbor(Point other) {
 }
 
 //return true if one point equals to another one
-bool Point::operator==(Point other) {
-    if (this->x == other.x && this->y == other.y)return true;
-    return false;
-}
+//bool Point::operator==(Point* other) {
+//    if (this->x == other->x && this->y == other.y)return true;
+//    return false;
+//}
 
 //get the type step that we did
 string Point::getMove(Point other) {
@@ -80,6 +80,11 @@ string Point::getMove(Point other) {
     if (this->x < other.getX() && this->y == other.getY()) {
         return "U";
     }
+
+
 }
 
 
+//ostream& operator<<(ostream &out, const Point &point) {
+
+//}

@@ -7,8 +7,10 @@
 
 #include "State.h"
 #include <vector>
+#include <string>
 
 using std::vector;
+using std::string;
 
 //interface for a thing to search in it
 //the functional of the search problem
@@ -36,6 +38,7 @@ public:
     //set the goal state of the searchable item
     virtual void setGoalState(State<T> *goalState) = 0;
 
+    virtual string getRoute() = 0;
 
     //todo - check if need pointer to vector
 };

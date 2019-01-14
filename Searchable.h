@@ -52,35 +52,40 @@ public:
         this->goalState = goalState;
     }
 
+    string getRoute() override {
+        return "PATH";
+    }
     //todo check how to do it using open-close
     //get the string of our way to the end
-    string getRoute() {
+    //string getRoute() {
         //the route is from the end to the begining
-        State<T> *current = getGoalState();
-        string path="";
-        //end when getting to the start
-        while (current->getComaFrom() != nullptr) {
-            //go on the state of your structure
-            for (State<T> *state:structure) {
-                if (state->getComaFrom() != nullptr) {
-                    //find father node of current
-                    if (current->getFrom()->equals(state)) {
-                        path += current->getState().move(state->getState());
-                        break;
-                    }
-                }
-            }
-            current = current->getComaFrom();
-            //when the current is the initial state
-            if (current->getFrom()->equals(getInitializeState())) {
-                break;
-            }
-        }
-        //find the last move to the initial state
-        path += current->getState().move(getInitializeState()->getState());
-        reverse(path.begin(), path.end());
-        return path;
-    }
+//        State<T> *current = getGoalState();
+//        string path="";
+//        //end when getting to the start
+//        while (current->getFrom() != nullptr) {
+//            //go on the state of your structure
+//            for (State<T> *state:structure) {
+//                if (state->getFrom() != nullptr) {
+//                    //find father node of current
+//                    if (current->getFrom()->equals(state)) {
+//                        path += current->getState().getMove(state->getState());
+//                        break;
+//                    }
+//                }
+//            }
+//            current = current->getFrom();
+//            //when the current is the initial state
+//            if (current->getFrom()->equals(getInitializeState())) {
+//                break;
+//            }
+//        }
+//        //find the last move to the initial state
+//        path += current->getState().getMove(getInitializeState()->getState());
+//        reverse(path.begin(), path.end());
+//        return path;
+      //      return "THIS PATH";
+//    }
+
 //    virtual vector<State<T> *> getAllPossibleStates(State<T>* state) = 0;
 };
 

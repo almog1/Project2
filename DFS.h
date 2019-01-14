@@ -92,7 +92,7 @@ public:
                 this->closedVector.push_back(state);
             }
         }
-
+        return Isearchable->getRoute();
     }
 
 
