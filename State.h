@@ -19,6 +19,8 @@ public:
         this->myState = state;
     };
 
+    State(T myState, double cost) : myState(myState), cost(cost) {}
+
     State(T myState, double trailcost, State<T> *from) : myState(myState), trailcost(trailcost), from(from) {}
 
     //return the state T

@@ -30,6 +30,7 @@ public:
     void handleClient(int socketId) override {
         //our buffer that read the message
         char prob[BUFF_SIZE];
+        string problem;
         string solution;
         ssize_t n;
         char *chr;
@@ -71,7 +72,7 @@ public:
 
             //write a response to the client
             chr = const_cast<char *>(solution.c_str());
-            //write the solution to the buffer
+            //write the solution to the socket
             n = write(socketId, chr, strlen(chr));
             cout << solution << endl;
 

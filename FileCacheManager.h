@@ -28,30 +28,30 @@ public:
     //put in the map all the cache from the file
     FileCacheManager(string path, P prob) {
         this->path = path;
-
-        //read from file
-        P problem;
-        S solution;
-        this->oldSize = 0;
-
-        //check if the file exist
-        ifstream ifs(this->path);
-        if (ifs.is_open()) {
-            //while file isn't over
-            while (!ifs.eof()) {
-                //problem and solution seperate by '$'
-                //take the problem
-                ifs >> problem;
-                ifs >> solution;
-
-                cache.insert(pair<P,S>(problem,solution));
-            }
-
-            this->oldSize = cache.size(); //save the old size
-
-            //close the file
-            ifs.close();
-        }
+//
+//        //read from file
+//        P problem;
+//        S solution;
+//        this->oldSize = 0;
+//
+//        //check if the file exist
+//        ifstream ifs(this->path);
+//        if (ifs.is_open()) {
+//            //while file isn't over
+//            while (!ifs.eof()) {
+//                //problem and solution seperate by '$'
+//                //take the problem
+//                ifs >> problem;
+//                ifs >> solution;
+//
+//                cache.insert(pair<P,S>(problem,solution));
+//            }
+//
+//            this->oldSize = cache.size(); //save the old size
+//
+//            //close the file
+//            ifs.close();
+//        }
     };
 
     bool isSolutionExist(P prob) override {
@@ -80,19 +80,19 @@ public:
     bool saveSolution(P prob, S sol) override {
         //put it in the map
         //todo - maybe don't need it becaue use juse once
-        this->cache.insert(pair<P,S>(prob,sol));
-
-        ofstream ofs;
-
-        //open the file for writing without delete the old
-        ofs.open(path, ofstream::out | ofstream::app);
-
-        //put the prob and solution in the file
-        //to be working - have to make sure every prob and sol have << operator
-        ofs << prob << " " << sol << "\n";
-
-        //close the file
-        ofs.close();
+//        this->cache.insert(pair<P,S>(prob,sol));
+//
+//        ofstream ofs;
+//
+//        //open the file for writing without delete the old
+//        ofs.open(path, ofstream::out | ofstream::app);
+//
+//        //put the prob and solution in the file
+//        //to be working - have to make sure every prob and sol have << operator
+//        ofs << prob << " " << sol << "\n";
+//
+//        //close the file
+//        ofs.close();
     };
 };
 

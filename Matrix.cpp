@@ -30,3 +30,5 @@ vector<State<Point> *> Matrix::getAllPossibleStates(State<Point> *currentState) 
     }
     return possible;
 }
+
+Matrix::Matrix() {}

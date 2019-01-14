@@ -30,6 +30,10 @@ public:
         return this->goalState;
     }
 
+    virtual vector<State<T> *> getStructure() {
+        return this->structure;
+    }
+
     //get the possible moves to the next step
     virtual vector<State<T> *> getAllPossibleStates(State<T> *currentState) =0;
 
@@ -79,5 +83,7 @@ public:
     }
 //    virtual vector<State<T> *> getAllPossibleStates(State<T>* state) = 0;
 };
+
+
 
 #endif //PROJECT2_SEARCHABLE_H

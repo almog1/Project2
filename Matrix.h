@@ -12,6 +12,8 @@ using std::vector;
 
 class Matrix : public Searchable<Point> {
 public:
+    Matrix();
+
     //the constructor of the matrix
     Matrix(vector<State<Point>*> structure, State<Point>* initialState,State<Point>* goal){
         this->goalState=goal;

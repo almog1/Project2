@@ -7,6 +7,10 @@
 #include "FileCacheManager.h"
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
+#include "MyClientHandler.h"
+#include "Matrix.h"
+#include "SolverBestSearch.h"
+#include "DFS.h"
 
 using namespace std;
 
@@ -45,11 +49,12 @@ int main() {
 //    }
 //
     MySerialServer *d = new MySerialServer();
-    Solver<string, string> *stringR = new StringReverser();
-    CacheManager<string, string> *cacheManager = new FileCacheManager<string, string>(
-            "/home/chagit/CLionProjects/Project22/testFile", "check");
-    ClientHandler *ds = new MyTestClientHandler<string, string>(stringR, cacheManager);
-     d->open(5400, ds);
+    ISearchable<Point> * mat = new Matrix();
+    Solver<ISearchable<Point>*, string> *matrixR = new SolverBestSearch<Point>();
+    CacheManager<ISearchable<Point>*, string> *cacheManager = new FileCacheManager<ISearchable<Point>*, string>(
+            "/home/chagit/CLionProjects/Project22/testFile", mat);
+    ClientHandler *ds = new MyClientHandler<ISearchable<Point>*, string>(matrixR, cacheManager);
+    d->open(5400, ds);
 
     //************for solver string revrse***********
 
