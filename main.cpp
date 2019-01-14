@@ -11,6 +11,7 @@
 #include "Matrix.h"
 #include "SolverBestSearch.h"
 #include "DFS.h"
+#include "BFS.h"
 
 using namespace std;
 
@@ -53,7 +54,9 @@ int main() {
     std::cout<<*p<<std::endl;
     MySerialServer *d = new MySerialServer();
     ISearchable<Point> * mat = new Matrix();
+ //   Solver<ISearchable<Point>*, string> *matrixR = new SolverBestSearch<Point>(new DFS<Point>());
     Solver<ISearchable<Point>*, string> *matrixR = new SolverBestSearch<Point>(new DFS<Point>());
+
     CacheManager<ISearchable<Point>*, string> *cacheManager = new FileCacheManager<ISearchable<Point>*, string>(
             "/home/chagit/CLionProjects/Project22/testFile", mat);
     ClientHandler *ds = new MyClientHandler<ISearchable<Point>*, string>(matrixR, cacheManager);
