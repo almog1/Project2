@@ -41,6 +41,9 @@ public:
             for (it = next.begin(); it != next.end(); it++) {
                 //if not in closed list
                 if (find(close.begin(), close.end(), (*it)) == close.end()) {
+                    //set the from
+                    (*it)->setFrom(state); // state wiil be the "from" of this state
+
                     //its not in the closed list
                     //   close.push_back(*it);
                     open.push_back(*it);

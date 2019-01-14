@@ -25,10 +25,11 @@ public:
 
     //return the total cost of all the nodes in the path -
     // all the nodes evaluated
-    virtual int getCostOfNodes();
+    virtual int getCostOfNodes(){
 
-    virtual //get the numebr of nodes
-    int numberOFNodes() {
+    };
+//get the numebr of nodes
+    virtual int numberOFNodes() {
         return this->nodesNumer;
     };
 };

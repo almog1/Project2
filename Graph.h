@@ -5,58 +5,77 @@
 #ifndef PROJECT2_GRAPH_H
 #define PROJECT2_GRAPH_H
 
+#include "Edge.h"
 #include "Searchable.h"
-#include <bits/stdc++.h>
+#include <list>
+#include <map>
+
+using std::list;
+using std::vector;
+using std::map;
 
 //represent a graph
 //template<class T>
-//class Graph : public Searchable<T> {
-//// C++ program to represent undirected and weighted graph
-//// using STL. The program basically prints adjacency list
-//// representation of graph
-//
-//// To add an edge
-//void addEdge(vector <pair<int, int> > adj[], int u,
-//             int v, int wt)
-//{
-//    adj[u].push_back(make_pair(v, wt));
-//    adj[v].push_back(make_pair(u, wt));
-//}
-//
-//// Print adjacency list representaion ot graph
-//void printGraph(vector<pair<int,int> > adj[], int V)
-//{
-//    int v, w;
-//    for (int u = 0; u < V; u++)
-//    {
-//        cout << "Node " << u << " makes an edge with \n";
-//        for (auto it = adj[u].begin(); it!=adj[u].end(); it++)
-//        {
-//            v = it->first;
-//            w = it->second;
-//            cout << "\tNode " << v << " with edge weight ="
-//                 << w << "\n";
-//        }
-//        cout << "\n";
+class Graph : public Searchable<int> {
+
+    int V;    // No. of vertices
+    State<int>* initSt;
+    State<int>* goalSt;
+
+    // Pointer to an array containing
+    // adjacency lists
+
+    vector<Edge*> edges;
+public:
+    vector<State<int> *> getAllPossibleStates(State<int> *currentState) {
+        vector<State<int>*> possible;
+        //take from the list of edges
+        std::vector<Edge*>::iterator it;
+        for(it = this->edges.begin(); it != this->edges.end(); it++){
+            //get dest
+            //take all the currentStates
+           if((*it)->getSrc() == currentState){
+               possible.push_back((*it)->getDest()); //add the dest
+           }
+        }
+        return possible;
+      //  return this->adj[currentState->getState()];
+        //return this->adj; //return the vector of all adjecency states
+    };
+
+    State<int> *getInitializeState() override {
+        return this->initSt;
+    }
+
+    State<int> *getGoalState() override {
+        return this->goalSt;
+    }
+
+    void setStructure(vector<State<int> *> structure) override {
+       // Searchable::setStructure(structure);
+    }
+
+    void setInitialState(State<int> *initialState) override {
+        //Searchable::setInitialState(initialState);
+    }
+
+    void setGoalState(State<int> *goalState) override {
+    }
+
+//    string getRoute() override {
+//        return Searchable::getRoute();
 //    }
-//}
-//
-//// Driver code
-//int main()
-//{
-//    int V = 5;
-//    vector<pair<int, int> > adj[V];
-//    addEdge(adj, 0, 1, 10);
-//    addEdge(adj, 0, 4, 20);
-//    addEdge(adj, 1, 2, 30);
-//    addEdge(adj, 1, 3, 40);
-//    addEdge(adj, 1, 4, 50);
-//    addEdge(adj, 2, 3, 60);
-//    addEdge(adj, 3, 4, 70);
-//    printGraph(adj, V);
-//    return 0;
-//}
 
-//};
+    Graph(int V,State<int>* init,State<int>* goal) {
+        this->V = V;
+        this->initSt = init;
+        this->goalSt = goal;
+    };   // Constructor
 
+    // function to add an edge to graph
+    void addEdge(State<int> *v, State<int> *w) {
+        this->edges.push_back(new Edge(v,w));
+    };
+
+};
 #endif //PROJECT2_GRAPH_H

@@ -30,16 +30,16 @@ public:
 
     //return the ost of al the nodes - member
     virtual int getCostOfNodes() {
-        return this->costOfAllNodes;
+        //return this->costOfAllNodes;
     }
 
     virtual //return the next state in the queue
     State<T> *popList() {
-        this->nodesNumer++; //plus one to the nodes we been
-        //check not empty
-        if (this->myQueue.empty() == false) {
-            return this->myQueue.pop();
-        }
+//        this->nodesNumer++; //plus one to the nodes we been
+//        //check not empty
+//        if (this->myQueue.empty() == false) {
+//            return this->myQueue.pop();
+//        }
     };
 
 };
