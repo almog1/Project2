@@ -113,19 +113,28 @@ public:
         for (int i = 0; i < rowSize; i++) {
             temp = split(allLines[i], ",");
             for (int j = 0; j < colSize; ++j) {
-                searchable.push_back(new State<Point>(Point(i, j), stod(temp[j])));
+                if (initialState->getState().getX() == i && initialState->getState().getY() == j) {
+                    initialState->setCost(stod(temp[j]));
+                    searchable.push_back(initialState);
+                }
+                else if (goalState->getState().getX() == i && goalState->getState().getY() == j) {
+                    goalState->setCost(stod(temp[j]));
+                    searchable.push_back(goalState);
+                } else {
+                    searchable.push_back(new State<Point>(Point(i, j), stod(temp[j])));
+                }
             }
         }
 
         //create the matrix with all her variables
-        ISearchable<Point> * mat = new Matrix(searchable, initialState, goalState);
+        ISearchable<Point> *mat = new Matrix(searchable, initialState, goalState);
 
         //check if there is a solution for the problem
         if (this->cacheManager->isSolutionExist(mat)) {
             solution = this->cacheManager->getSolution(mat);
         } else {
             solution = solver->solve(mat);
-            cacheManager->saveSolution(mat,solution);
+            cacheManager->saveSolution(mat, solution);
         }
 
         // write a response to the client

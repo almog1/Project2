@@ -71,6 +71,13 @@ public:
         State::trailcost=trailcost;
     }
 
+//    bool operator==(State<T>* other){
+//        if(this == other){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
     //destructor
     ~State() {
     };
