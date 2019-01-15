@@ -137,7 +137,7 @@ public:
             cacheManager->saveSolution(mat, solution);
         }
 
-        // write a response to the client
+        // write a response to the server
         chr = const_cast<char *>(solution.c_str());
         n = write(socketId, chr, strlen(chr));
         cout << "in myclienthandler:" + solution << endl;
