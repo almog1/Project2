@@ -81,6 +81,24 @@ public:
     //destructor
     ~State() {
     };
+
+    bool operator<(const State& otherState){
+        //compare the cost of the state
+        if(otherState.getCost() < this->cost){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    bool operator>(const State& otherState){
+        //compare the cost of the state
+        if(otherState.getCost() > this->cost){
+            return true;
+        }else{
+            return false;
+        }
+    }
 };
 
 #endif //PROJECT2_STATE_H

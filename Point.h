@@ -12,6 +12,7 @@
 
 using std::string;
 using std::ostream;
+using std::istream;
 
 class Point {
 private:
@@ -21,6 +22,7 @@ private:
 public:
     Point(int x, int y);
 
+    Point(){}
     ~Point();
 
     //get x value
@@ -58,6 +60,15 @@ public:
 
     //print a point using ostream
     friend ostream &operator<<(ostream &out, const Point &point);
+    friend istream &operator>>(istream &in,  Point &point){
+    char brack1 = '(',brake2 = ')', comma = ',';
+    string str;
+   // string x,y;
+  // int x,y;
+    in >> brack1 >> point.x >> comma >> point.y>>str>>brake2;
+    return in;
+    };
+
 };
 
 #endif //PROJECT2_POINT_H

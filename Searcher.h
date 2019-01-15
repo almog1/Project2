@@ -30,7 +30,7 @@ public:
 
     //return the ost of al the nodes - member
     virtual int getCostOfNodes() {
-        //return this->costOfAllNodes;
+        return this->costOfAllNodes;
     }
 
     virtual //return the next state in the queue

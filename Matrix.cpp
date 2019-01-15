@@ -35,6 +35,7 @@ Matrix::Matrix() {}
 
 string Matrix::getRoute() {
     State<Point> *current = getGoalState();
+    int totalCost = 0;
     string path = "}";
     //end when getting to the start
     while (current->getFrom() != nullptr) {
@@ -42,7 +43,10 @@ string Matrix::getRoute() {
         for (State<Point> *state:structure) {
             if (state->getFrom() != nullptr) {
                 //find father node of current
-                if (current->getFrom()->equals(state)) {
+                if (current->getFrom() == (state)) {
+                //if (current->getFrom()->equals(state)) {
+                    //add to cost
+                    totalCost = totalCost + current->getCost() ;
                     path = "," + current->getState().getMove(state->getState()) + path;
                     break;
                 }
@@ -55,6 +59,7 @@ string Matrix::getRoute() {
         }
     }
     //find the last move to the initial state
+    totalCost = totalCost + current->getCost() ;
     path = "{" + current->getState().getMove(getInitializeState()->getState()) + path;
     return path;
 }

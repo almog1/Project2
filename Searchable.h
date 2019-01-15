@@ -20,6 +20,8 @@ protected:
     State<T> *initialState;
     State<T> *goalState;
 public:
+    //for comparing states
+
     //return the initialize state of our 'problem'
     virtual State<T> *getInitializeState() {
         return this->initialState;

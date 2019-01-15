@@ -26,7 +26,7 @@ public:
     //return the total cost of all the nodes in the path -
     // all the nodes evaluated
     virtual int getCostOfNodes(){
-
+        return this->costOfAllNodes;
     };
 //get the numebr of nodes
   //  virtual int numberOFNodes() {

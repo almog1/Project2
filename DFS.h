@@ -30,6 +30,7 @@ class DFS : public Searcher<T> {
 public:
     DFS() {
         Searcher<T>::nodesNumer = 0;
+        Searcher<T>::costOfAllNodes = 0;
     }
 
     int numberOFNodes() override {
@@ -38,7 +39,7 @@ public:
     }
 
     int getCostOfNodes() override {
-        //  return Searcher::getCostOfNodes();
+          return Searcher<T>::getCostOfNodes();
     }
 
     State<T> *popList() override {
@@ -76,6 +77,7 @@ public:
             //check if not in the close vector
             if (find(this->closedVector.begin(), this->closedVector.end(), state) == this->closedVector.end()) {
                 Searcher<T>::nodesNumer++;
+               // Searcher<T>::costOfAllNodes++;
                 //run on all the negibohors and add them
                 vector<State<T> *> statesToOpen = Isearchable->getAllPossibleStates(state);
 
@@ -92,6 +94,9 @@ public:
                 this->closedVector.push_back(state);
             }
         }
+        std::cout<<"end search"<<this->numberOFNodes()<<std::endl;
+        std::cout<<"end search cost"<<this->getCostOfNodes()<<std::endl;
+
         return Isearchable->getRoute();
     }
 

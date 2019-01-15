@@ -87,7 +87,13 @@ ostream &operator<<(ostream &out, const Point &point) {
     return out;
 };
 
-
+//istream& operator>>(istream &in, const Point &point) {
+//    char brack1 = '(',brake2 = ')', comma = ',';
+//   // string x,y;
+//   int x,y;
+//
+////    return in >> brack1 >> point.x >> comma >> point.y>>brake2;
+//}
 //ostream& operator<<(ostream &out, const Point &point) {
 
 //}
