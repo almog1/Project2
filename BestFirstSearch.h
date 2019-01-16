@@ -91,8 +91,10 @@ public:
                 }
             }
         }
-        std::cout << "TRAIL COST " << Isearchable->getGoalState()->getTrailcost() << std::endl;
-        std::cout << "V Number " << Searcher<T>::nodesNumer << std::endl;
+        //  std::cout << "TRAIL COST " << Isearchable->getGoalState()->getTrailcost() << std::endl;
+        //std::cout << "V Number " << Searcher<T>::nodesNumer << std::endl;
+
+      //  std::cout << Isearchable->getGoalState()->getTrailcost() << "," << Searcher<T>::nodesNumer << std::endl;
 
         return Isearchable->getRoute();
 

@@ -13,11 +13,14 @@
 #include <vector>
 #include <cstring>
 #include <unistd.h>
+#include <iostream>
+#include <sstream>
 
 #define BUFF_SIZE 256
 #define ONE 1
 #define ZERO 0
 
+using namespace std;
 //read from the client line after line and creates a matrix
 //todo check if need generics because its a specific problem
 template<class P, class S>
@@ -71,6 +74,7 @@ public:
         //num to count the number of the rows
         int numLine = 0;
 
+        string left = "";
         //if connection is established start to communicate
         while (true) {
             //clean the buffer - put 0 in all of him
@@ -84,6 +88,8 @@ public:
                 exit(ONE);
             }
 
+            //line += buffer; //add the line to the corrent buffer
+
             //read till the /n and returns the lines.s
             line = line + buffer;
 
@@ -92,30 +98,35 @@ public:
             //create from the line
             string segment;
 
+            bool isWithSpace = false;
 
             //split by "/n"
-//            while (getline(temp, segment, '\n')) {
-//                line = segment;
-//            }
-//
-            //split by "/n"
-            if (getline(temp, segment, '\n')) {
+            while (getline(temp, segment, '\n')) {
+                isWithSpace = true;
                 line = segment;
-            }
+                if(!temp.eof() && segment != "end"){
+                    allLines.push_back(line);
+                }
 
-            //buffer = line;
+            }
+//            if (!isWithSpace) {
+//                allLines.push_back(line);
+//            }
 
             //if we got to the end of the problem
 
-            if(line == "end"){
-            //if ((strcmp(buffer, "end")) == ZERO) {
+            if(line == "end" || line == "end\n"){
                 break;
             }
 
+            //if segment not empty - keep it
+            if(segment == ""){
+                line = "";
+            }
             //read all lines from the client till got 'end'
-            allLines.push_back(line);
+           // allLines.push_back(line);
 
-            line = "";
+          //  line = "";
         }
 
 //        //update the values that we got
@@ -172,7 +183,7 @@ public:
         // write a response to the server
         chr = const_cast<char *>(solution.c_str());
         n = write(socketId, chr, strlen(chr));
-        cout << "in myclienthandler:" + solution << endl;
+        cout << solution << endl;
 
         if (n < 0) {
             perror("ERROR writing to socket");

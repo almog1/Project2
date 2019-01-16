@@ -2,25 +2,32 @@
 #include <string>
 #include "Headers.h"
 
-//todo add a class of headers
 using namespace std;
 
+//static mutable pthread_mutex_t mutex;
+
+namespace boot {
+    class Main {
+    public:
+        int main(int argc, char *argv[]) {
+            return 0;
+        }
+    };
+}
+
 int main(int argc, char *argv[]) {
-    int port;
-    if (argc >= 1) {
-        port = stoi(argv[1]);
+    boot::Main m;
+    m.main(argc, argv);
+    server_side::Server *server = new MyParallelServer();
+    Solver<ISearchable<Point> *, string> *solver = new SolverBestSearch<Point>(new AStarSearch<Point>());
+    FileCacheManager *cacheManager = new FileCacheManager("solutionsTest.txt");
+    ClientHandler *clientHandler = new MyClientHandler<ISearchable<Point> *, string>(solver, cacheManager);
+    server->open(stoi(argv[1]), clientHandler);
 
-        MySerialServer *d = new MySerialServer();
-        ISearchable<Point> *mat = new Matrix();
-        //Solver<ISearchable<Point>*, string> *matrixR = new SolverBestSearch<Point>(new DFS<Point>());
-        Solver<ISearchable<Point> *, string> *matrixR = new SolverBestSearch<Point>(new AStarSearch<Point>());
-        //CacheManager<ISearchable<Point>*, string> *cacheManager
-        FileCacheManager *cacheManager = new FileCacheManager(
-                "/home/almogg/CLionProjects/Project2/testFile");
-        ClientHandler *ds = new MyClientHandler<ISearchable<Point> *, string>(matrixR, cacheManager);
-        d->open(port, ds);
+    delete server;
+    delete solver;
+    delete cacheManager;
+    delete clientHandler;
 
-        while (true) {}
-    }
     return 0;
 }
