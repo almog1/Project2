@@ -26,6 +26,7 @@ public:
 
     string getRoute() override;
 
+    double getHuristic(State<Point> *start, State<Point> *goal) override;
 };
 
 #endif //PROJECT2_MATRIX_H

@@ -63,3 +63,10 @@ string Matrix::getRoute() {
     path = "{" + current->getState().getMove(getInitializeState()->getState()) + path;
     return path;
 }
+
+//get the huristic from start to goal
+double Matrix::getHuristic(State<Point> *start, State<Point> *goal) {
+    //get "manhattan" distance from start to goal
+    return start->getState().distance(goal->getState());
+
+}

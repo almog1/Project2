@@ -57,6 +57,11 @@ public:
     //get the string of our way to the end
     string getRoute() override = 0;
 
+    virtual double getHuristic(State<T> *start, State<T> *goal) override {
+       // return ISearchable::getHuristic(start, goal);
+    }
+
+
 };
 
 

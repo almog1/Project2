@@ -58,6 +58,9 @@ public:
     //get the type step that we did
     string getMove(Point other);
 
+    //get other point and calculate diatance between them
+    double distance(Point other);
+
     //print a point using ostream
     friend ostream &operator<<(ostream &out, const Point &point);
     friend istream &operator>>(istream &in,  Point &point){

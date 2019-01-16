@@ -38,6 +38,11 @@ public:
     //set the goal state of the searchable item
     virtual void setGoalState(State<T> *goalState) = 0;
 
+    //get the huristic from start to goal
+    virtual double getHuristic(State<T> * start,State<T>* goal){
+
+    };
+
     virtual string getRoute() = 0;
 
     //todo - check if need pointer to vector

@@ -5,6 +5,8 @@
 #ifndef PROJECT2_STATE_H
 #define PROJECT2_STATE_H
 
+#include <limits>
+
 template<class T>
 class State {
 private:
@@ -13,15 +15,19 @@ private:
     double trailcost; //how much cost to reach this state
     //int cost; //how much cost to reach this state
     State<T> *from;//the state we came from to this state
+    double heuri; //for the huristic
 public:
     //constructors
     State(T state) {
         this->myState = state;
+        this->trailcost = std::numeric_limits<double>::infinity(); //init trail cost to infinity
     };
 
-    State(T myState, double cost) : myState(myState), cost(cost) {}
+    State(T myState, double cost) : myState(myState),
+                                    cost(cost) { this->trailcost = std::numeric_limits<double>::infinity(); }
 
-    State(T myState, double trailcost, State<T> *from) : myState(myState), trailcost(trailcost), from(from) {}
+    State(T myState, double trailcost, State<T> *from) : myState(myState), trailcost(trailcost),
+                                                         from(from) { this->trailcost = std::numeric_limits<double>::infinity(); }
 
     //return the state T
     T getState() {
@@ -55,7 +61,8 @@ public:
     void setTrailcost(double trailcost) {
         State::trailcost = trailcost;
     }
-    int valueOfState(){
+
+    int valueOfState() {
         //return the value of this state
         return this->cost;
     }
@@ -68,7 +75,7 @@ public:
     //initialize our cost for the current path
     void setCost(double cost) {
         State::cost = cost;
-        State::trailcost=trailcost;
+        State::trailcost = trailcost;
     }
 
 //    bool operator==(State<T>* other){
@@ -82,20 +89,28 @@ public:
     ~State() {
     };
 
-    bool operator<(const State& otherState){
+    double getHeuri() const {
+        return this->heuri;
+    }
+
+    void setHeuri(double heuri) {
+        State::heuri = heuri;
+    }
+
+    bool operator<(const State &otherState) {
         //compare the cost of the state
-        if(otherState.getCost() < this->cost){
+        if (otherState.getCost() < this->cost) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    bool operator>(const State& otherState){
+    bool operator>(const State &otherState) {
         //compare the cost of the state
-        if(otherState.getCost() > this->cost){
+        if (otherState.getCost() > this->cost) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

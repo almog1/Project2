@@ -2,6 +2,7 @@
 // Created by almogg on 1/9/19.
 //
 
+#include "math.h"
 #include "Point.h"
 
 //constructor of a new point
@@ -80,6 +81,15 @@ string Point::getMove(Point other) {
     if (this->x < other.getX() && this->y == other.getY()) {
         return "Up";
     }
+}
+
+double Point::distance(Point other) {
+    double height, width, dis;
+    height = abs(this->x - other.getX());
+    width = abs(this->y - other.getY());
+    dis = sqrt(pow(height, 2) + pow(width, 2)); //calculate the distance
+    //height^2+width^2 -> sqrt all this
+    return dis;
 }
 
 ostream &operator<<(ostream &out, const Point &point) {
