@@ -19,6 +19,8 @@
 
 
 using namespace std;
+static pthread_mutex_t mutex;
+
 
 //cache manager of files
 class FileCacheManager : public CacheManager<Matrix *, string> {
@@ -34,9 +36,12 @@ public:
     //get a path of the file
     //put in the map all the cache from the file
     FileCacheManager(string path) {
+        pthread_mutex_init(&mutex, nullptr);
+
         this->path = path;
         //for the problem - diverged with '$$'
         //for the solution - diverged with '$'
+        pthread_mutex_lock(&mutex);
 
         ifstream readFile;
         readFile.open(path);
@@ -62,6 +67,7 @@ public:
                     this->toDelete.push_back(mat);
 
                     this->cache.insert(pair<vector<string>, string>(mat->getAllLines(), solution));
+
                     lines.clear();
                 }
                 if (inNewMtrix) {
@@ -73,14 +79,18 @@ public:
             }
             readFile.close();
         }
+        pthread_mutex_unlock(&mutex);
     };
 
     bool isSolutionExist(Matrix *prob) override {
+        pthread_mutex_lock(&mutex);
         //check the map
         typename ::map<vector<string>, string>::iterator it = this->cache.find(prob->getAllLines());
+        pthread_mutex_unlock(&mutex);
 
         //if its not the end - have the solution
         if (it != this->cache.end()) {
+
             return true; //the solution exist
         } else {
             return false; // solution not exist
@@ -89,7 +99,9 @@ public:
     };
 
     string getSolution(Matrix *prob) override {
+        pthread_mutex_lock(&mutex);
         typename ::map<vector<string>, string>::iterator it = this->cache.find(prob->getAllLines());
+        pthread_mutex_unlock(&mutex);
 
         //if its not the end - have the solution
         if (it != this->cache.end()) {
@@ -101,6 +113,8 @@ public:
     bool saveSolution(Matrix *prob, string sol) override {
         //the problem
         vector<string> lines = prob->getAllLines();
+        pthread_mutex_lock(&mutex);
+        this->cache.insert(pair<vector<string>, string>(prob->getAllLines(), sol));
 
         ofstream ofs;
         ofs.open(this->path, ios::out | ios::app | ios::ate);
@@ -115,6 +129,8 @@ public:
 
             ofs.close();
         }
+        pthread_mutex_unlock(&mutex);
+
     }
 };
 

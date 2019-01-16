@@ -4,8 +4,6 @@
 
 using namespace std;
 
-//static mutable pthread_mutex_t mutex;
-
 namespace boot {
     class Main {
     public:
