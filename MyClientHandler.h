@@ -4,6 +4,7 @@
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
+#include "FileCacheManager.h"
 #include "OtherFunctions.h"
 #include "Point.h"
 #include "State.h"
@@ -24,11 +25,16 @@ class MyClientHandler : public ClientHandler {
     //solver to solve this client
     Solver<P, S> *solver;
     //cache manager that the client will use
-    CacheManager<P, S> *cacheManager;
+    //CacheManager<P, S> *cacheManager;
+    FileCacheManager *cacheManager;
+    //vector of elements to deleate at the end of the program
+    vector<Matrix *> listSearchble;
+    //vector of all the states to delete after that
+    vector<State<Point> *> listStates;
 
 public:
-    MyClientHandler(Solver<P, S> *solver, CacheManager<P, S> *cacheManager) : solver(solver),
-                                                                              cacheManager(cacheManager) {}
+    MyClientHandler(Solver<P, S> *solver, FileCacheManager *cacheManager) : solver(solver),
+                                                                            cacheManager(cacheManager) {}
 
     void handleClient(int socketId) override {
         //our charities for the matrix problem (searchable)
@@ -87,46 +93,52 @@ public:
             }
             //read all lines from the client till got 'end'
             allLines.push_back(line);
+
             line = "";
         }
 
-        //update the values that we got
-        rowSize = allLines.size() - 2;
-        colSize = split(allLines[0], ",").size();
-
-        //update the initialize state
-        temp = split(allLines[allLines.size() - 2], ",");
-        //check if got 2 values in it
-        if (temp.size() == 2) {
-            initialState = new State<Point>(Point(stoi(temp[0]), stoi(temp[1])), 0);
-        }
-
-        //update the initialize state
-        temp = split(allLines[allLines.size() - 1], ",");
-        //check if got 2 values in it
-        if (temp.size() == 2) {
-            goalState = new State<Point>(Point(stoi(temp[0]), stoi(temp[1])), 0);
-        }
-
-        //update the matrix values
-        for (int i = 0; i < rowSize; i++) {
-            temp = split(allLines[i], ",");
-            for (int j = 0; j < colSize; ++j) {
-                if (initialState->getState().getX() == i && initialState->getState().getY() == j) {
-                    initialState->setCost(stod(temp[j]));
-                    searchable.push_back(initialState);
-                }
-                else if (goalState->getState().getX() == i && goalState->getState().getY() == j) {
-                    goalState->setCost(stod(temp[j]));
-                    searchable.push_back(goalState);
-                } else {
-                    searchable.push_back(new State<Point>(Point(i, j), stod(temp[j])));
-                }
-            }
-        }
+//        //update the values that we got
+//        rowSize = allLines.size() - 2;
+//        colSize = split(allLines[0], ",").size();
+//
+//        //update the initialize state
+//        temp = split(allLines[allLines.size() - 2], ",");
+//        //check if got 2 values in it
+//        if (temp.size() == 2) {
+//            initialState = new State<Point>(Point(stoi(temp[0]), stoi(temp[1])), 0);
+//            listStates.push_back(initialState);
+//        }
+//
+//        //update the initialize state
+//        temp = split(allLines[allLines.size() - 1], ",");
+//        //check if got 2 values in it
+//        if (temp.size() == 2) {
+//            goalState = new State<Point>(Point(stoi(temp[0]), stoi(temp[1])), 0);
+//            listStates.push_back(goalState);
+//        }
+//
+//        //update the matrix values
+//        for (int i = 0; i < rowSize; i++) {
+//            temp = split(allLines[i], ",");
+//            for (int j = 0; j < colSize; ++j) {
+//                if (initialState->getState().getX() == i && initialState->getState().getY() == j) {
+//                    initialState->setCost(stod(temp[j]));
+//                    searchable.push_back(initialState);
+//                } else if (goalState->getState().getX() == i && goalState->getState().getY() == j) {
+//                    goalState->setCost(stod(temp[j]));
+//                    searchable.push_back(goalState);
+//                } else {
+//                    State<Point> *state = new State<Point>(Point(i, j), stod(temp[j]));
+//                    searchable.push_back(state);
+//                    listStates.push_back(state);
+//                }
+//            }
+//        }
 
         //create the matrix with all her variables
-        ISearchable<Point> *mat = new Matrix(searchable, initialState, goalState);
+        //ISearchable<Point> *mat = new Matrix(allLines);
+        Matrix *mat = new Matrix(allLines);
+        this->listSearchble.push_back(mat);
 
         //check if there is a solution for the problem
         if (this->cacheManager->isSolutionExist(mat)) {
@@ -144,6 +156,16 @@ public:
         if (n < 0) {
             perror("ERROR writing to socket");
             exit(1);
+        }
+    }
+
+    virtual ~MyClientHandler() {
+        for (auto searchable:this->listSearchble) {
+            delete searchable;
+        }
+
+        for (auto state:this->listStates) {
+            delete state;
         }
     }
 

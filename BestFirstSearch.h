@@ -9,6 +9,9 @@
 #include <queue>
 #include <iostream>
 
+using std::cout;
+using std::endl;
+
 //algoritm of searcher
 template<class T>
 class BestFirstSearch : public Searcher<T> {
@@ -30,7 +33,7 @@ public:
 
         // priority_queue<State<T> *> open; //priority queue
         vector<State<T> *> closedVect;
-        vector<State<T>*> openVect;
+        vector<State<T> *> openVect;
 
         priority_queue<State<T> *, vector<State<T> *>, CompareStateCost> openPriQ; //using the compareator of priority queue
 
@@ -80,6 +83,8 @@ public:
                 }
             }
         }
+        cout << "nodesNumer" << endl;
+        cout << Searcher<T>::nodesNumer << endl;
         return Isearchable->getRoute();
 
     }

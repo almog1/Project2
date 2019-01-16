@@ -6,22 +6,24 @@
 #define ZERO 0
 #define ONE 1
 #define TIME 5
-//todo change the number
+//todo change the number - check what we need to change
 #define TV_SEC 100000
 #define TV_USEC 0
 
 void MyParallelServer::open(int port, ClientHandler *clientHandler) {
-    int sockfd, portno;
+    int portno;
+    int clilen, cliSock;
+    struct sockaddr_in cli_addr;
     struct sockaddr_in serv_addr;
 
-    //call to socket() function
-    sockfd = socket(AF_INET, SOCK_STREAM, ZERO);
+    // first call to socket() function
+    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (sockfd < ZERO) {
+    if (sockfd < 0) {
         perror("ERROR opening socket");
-        exit(ONE);
+        exit(1);
     }
-
+    info->clientHandler = clientHandler;
     //initialize socket structure
     bzero((char *) &serv_addr, sizeof(serv_addr));
     portno = port;
@@ -30,63 +32,49 @@ void MyParallelServer::open(int port, ClientHandler *clientHandler) {
     serv_addr.sin_addr.s_addr = INADDR_ANY;
     serv_addr.sin_port = htons(portno);
 
-    //now bind the host address using bind() call
-    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < ZERO) {
+    // bind the host address using bind() call.
+    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
         perror("ERROR on binding");
         exit(1);
     }
-
-    int newsockfd, clilen;
-    struct sockaddr_in cli_addr;
-
-    struct params* info = new params;
     listen(sockfd, SOMAXCONN);
     clilen = sizeof(cli_addr);
 
-    //using the timeout
     timeval timeout;
     timeout.tv_sec = TV_SEC;
     timeout.tv_usec = TV_USEC;
 
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-
-
+    //start listening to the client
     while (true) {
-        //accept actual connection from the client
-        newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
-
-        if (newsockfd < 0)	{
-            if (errno == EWOULDBLOCK) {
-                //time out!
-                stop();
-                break;
-            }	else	{
-                perror("other error");
-                exit(3);
+        cliSock = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
+        info->sockfd = cliSock;
+        if (cliSock < 0) {
+            //end because of the timeout
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                stop();//close the trades
+                break;//end the loop
             }
+            perror("ERROR on accept");
+            exit(1);
         }
 
-        //setting params
-        info->sockfd = newsockfd;
-        info->clientHandler = clientHandler;
-        pthread_t thread;
-        //creating thread and sending to handle client
-        if (pthread_create(&thread, nullptr, MyParallelServer::parallelService,info) != 0){
+        //setting timeout
+        if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout)) == -1) {
+            perror("ERROR on setting timeout");
+        }
+
+        pthread_t pthread;
+        //create the tread to the client
+        if (pthread_create(&pthread, nullptr, MyParallelServer::parallelService, info) != 0) {
             perror("thread failed");
         }
-        //add the current thread to our vector
-        closeServer.push_back(pair<pthread_t,int>(thread,newsockfd));
-        threads.push_back(thread);
+        this->threads.push_back(pthread);
     }
 }
 
 void MyParallelServer::stop() {
     for (auto thread: this->threads) {
         pthread_join(thread, nullptr);
-    }
-    for(auto pair: this->closeServer){
-        close(pair.first);
-        //todo check how to close a tread
     }
 }
 

@@ -44,9 +44,9 @@ string Matrix::getRoute() {
             if (state->getFrom() != nullptr) {
                 //find father node of current
                 if (current->getFrom() == (state)) {
-                //if (current->getFrom()->equals(state)) {
+                    //if (current->getFrom()->equals(state)) {
                     //add to cost
-                    totalCost = totalCost + current->getCost() ;
+                    totalCost = totalCost + current->getCost();
                     path = "," + current->getState().getMove(state->getState()) + path;
                     break;
                 }
@@ -59,7 +59,7 @@ string Matrix::getRoute() {
         }
     }
     //find the last move to the initial state
-    totalCost = totalCost + current->getCost() ;
+    totalCost = totalCost + current->getCost();
     path = "{" + current->getState().getMove(getInitializeState()->getState()) + path;
     return path;
 }
@@ -69,4 +69,34 @@ double Matrix::getHuristic(State<Point> *start, State<Point> *goal) {
     //get "manhattan" distance from start to goal
     return start->getState().distance(goal->getState());
 
+}
+
+const vector<string> &Matrix::getAllLines() const {
+    return allLines;
+}
+
+void Matrix::setAllLines(const vector<string> &allLines) {
+    Matrix::allLines = allLines;
+}
+
+int Matrix::getColSize() const {
+    return colSize;
+}
+
+void Matrix::setColSize(int colSize) {
+    Matrix::colSize = colSize;
+}
+
+int Matrix::getRowSize() const {
+    return rowSize;
+}
+
+void Matrix::setRowSize(int rowSize) {
+    Matrix::rowSize = rowSize;
+}
+
+Matrix::~Matrix() {
+    for (auto state:this->listStates) {
+        delete state;
+    }
 }

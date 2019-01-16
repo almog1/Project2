@@ -30,6 +30,9 @@ private:
         ClientHandler* clientHandler;
         int sockfd;
     };
+    //struct from thte type params
+    struct params *info = new params();
+
 
 public:
     //open the server in the port and wait for the customer - connection
@@ -40,6 +43,11 @@ public:
 
     //initialize the params of the server
     static void* parallelService (void* params);
+
+    //destructor
+    ~MyParallelServer(){
+        delete info;
+    }
 };
 
 

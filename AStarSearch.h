@@ -97,7 +97,7 @@ public:
                         //changed the from to this state to be its parent
                         (*it)->setFrom(state);
                         (*it)->setTrailcost(estimated);//change the "g" - trail cost
-                        double hur = Isearchable->getHuristic(state,
+                        double hur = Isearchable->getHuristic(*it,
                                                               Isearchable->getGoalState()); //get the distance - the huristic
                         (*it)->setHeuri(hur); //change the huristic - the "h"
                         //add it to the open priority queue - if not there

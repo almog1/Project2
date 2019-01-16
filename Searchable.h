@@ -19,6 +19,7 @@ protected:
     std::vector<State<T> *> structure;
     State<T> *initialState;
     State<T> *goalState;
+
 public:
     //for comparing states
 
