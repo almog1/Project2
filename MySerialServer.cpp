@@ -41,7 +41,6 @@ void MySerialServer::serialService(int sockfd, ClientHandler* clientHandler) {
     int newsockfd, clilen;
     struct sockaddr_in cli_addr;
 
-    //todo timeout
 
 
     while (true) {

@@ -6,8 +6,7 @@
 #define ZERO 0
 #define ONE 1
 #define TIME 5
-//todo change the number - check what we need to change
-#define TV_SEC 20
+#define TV_SEC 1
 #define TV_USEC 0
 
 void MyParallelServer::open(int port, ClientHandler *clientHandler) {

@@ -71,7 +71,7 @@ public:
             this->stackOpen.pop(); //take it out
             Searcher<T>::nodesNumer++;
 
-            std::cout << state->getState() << std::endl;
+           // std::cout << state->getState() << std::endl;
 
             //check if it is the goal state
             if (state == Isearchable->getGoalState()) {

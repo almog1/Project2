@@ -22,7 +22,6 @@
 
 using namespace std;
 //read from the client line after line and creates a matrix
-//todo check if need generics because its a specific problem
 template<class P, class S>
 class MyClientHandler : public ClientHandler {
     //solver to solve this client

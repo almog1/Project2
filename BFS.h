@@ -45,7 +45,7 @@ public:
             state = openQueue.front(); //look at the next in the queue
             openQueue.pop();//take it out
 
-            std::cout << state->getState() << std::endl;
+           // std::cout << state->getState() << std::endl;
 
             //check if it is the goal state
             if (state == Isearchable->getGoalState()) {

@@ -22,7 +22,6 @@ public:
 
     }
 
-    //todo - the 0 can be change - need to check - if need something else to be duplicate
     //method for the search function - search in the searchable
     //update the number of nodes and return string of the path
     //in the end - update with this node cost

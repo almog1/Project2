@@ -21,7 +21,6 @@ public:
     virtual S getSolution(P prob){
 
     };
-    //todo check why cant virtual
 
     //save the specific solution in this cache
     //return true if success or false if not

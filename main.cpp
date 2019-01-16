@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     m.main(argc, argv);
     server_side::Server *server = new MyParallelServer();
     Solver<ISearchable<Point> *, string> *solver = new SolverBestSearch<Point>(new AStarSearch<Point>());
-    FileCacheManager *cacheManager = new FileCacheManager("solutionsTest.txt");
+    FileCacheManager *cacheManager = new FileCacheManager("solutionsF.txt");
     ClientHandler *clientHandler = new MyClientHandler<ISearchable<Point> *, string>(solver, cacheManager);
     server->open(stoi(argv[1]), clientHandler);
 

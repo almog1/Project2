@@ -35,10 +35,8 @@ public:
     //the solution is the best search path
     string solve(ISearchable<T>* p) override {
         return this->iSearcher->search(p);
-        //todo need to run on all the searchers and compare  between the cost of each
 
         //minimum - the best - save
-        //todo to print to file the cost of each
     }
 
 

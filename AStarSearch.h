@@ -70,7 +70,7 @@ public:
             openPriQ.pop(); //take it out
             closedVect.push_back(state);//put it in the close vector
 
-            std::cout << state->getState() << std::endl;
+           // std::cout << state->getState() << std::endl;
 
             //check if it is the goal state
             if (state == Isearchable->getGoalState()) {
