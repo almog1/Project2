@@ -39,7 +39,7 @@ public:
     }
 
     int getCostOfNodes() override {
-          return Searcher<T>::getCostOfNodes();
+        return Searcher<T>::getCostOfNodes();
     }
 
     State<T> *popList() override {
@@ -48,8 +48,11 @@ public:
 
     //search in the searchable
     string search(ISearchable<T> *Isearchable) override {
+        Searcher<T>::nodesNumer = 0;
         //take the init state from the searchable
         State<T> *state = Isearchable->getInitializeState();
+        state->setTrailcost(state->getCost()); //set it trail cost
+
         State<T> *stateV;
         typename vector<State<T> *>::iterator it;
 
@@ -66,37 +69,41 @@ public:
             //take the first
             state = this->stackOpen.top();
             this->stackOpen.pop(); //take it out
+            Searcher<T>::nodesNumer++;
+
             std::cout << state->getState() << std::endl;
 
             //check if it is the goal state
             if (state == Isearchable->getGoalState()) {
                 //return the path
                 this->found = true;
-            }
+            } else {
 
-            //check if not in the close vector
-            if (find(this->closedVector.begin(), this->closedVector.end(), state) == this->closedVector.end()) {
-                Searcher<T>::nodesNumer++;
-               // Searcher<T>::costOfAllNodes++;
-                //run on all the negibohors and add them
-                vector<State<T> *> statesToOpen = Isearchable->getAllPossibleStates(state);
+                //check if not in the close vector
+                if (find(this->closedVector.begin(), this->closedVector.end(), state) == this->closedVector.end()) {
 
-                typename vector<State<T> *>::iterator it;
-                for (it = statesToOpen.begin(); it != statesToOpen.end(); it++) {
-                    //just if not in close list
-                    if (find(this->closedVector.begin(), this->closedVector.end(), *it) == this->closedVector.end()) {
-                        //changed the from
-                        (*it)->setFrom(state);
-                        //take the state and do it in this state
-                        this->stackOpen.push(*it); //push the negibor to the queue
+                    //run on all the negibohors and add them
+                    vector<State<T> *> statesToOpen = Isearchable->getAllPossibleStates(state);
+
+                    typename vector<State<T> *>::iterator it;
+                    for (it = statesToOpen.begin(); it != statesToOpen.end(); it++) {
+                        //just if not in close list
+                        if (find(this->closedVector.begin(), this->closedVector.end(), *it) ==
+                            this->closedVector.end()) {
+                            //changed the from
+                            (*it)->setFrom(state);
+                            (*it)->setTrailcost((*it)->getCost() + state->getTrailcost());
+
+                            //take the state and do it in this state
+                            this->stackOpen.push(*it); //push the negibor to the queue
+                        }
                     }
+                    this->closedVector.push_back(state);
                 }
-                this->closedVector.push_back(state);
             }
         }
-        std::cout<<"end search"<<this->numberOFNodes()<<std::endl;
-        std::cout<<"end search cost"<<this->getCostOfNodes()<<std::endl;
-
+        std::cout<< "TRAIL COST "<<Isearchable->getGoalState()->getTrailcost()<<std::endl;
+        std::cout<< "V Number "<<Searcher<T>::nodesNumer <<std::endl;
         return Isearchable->getRoute();
     }
 

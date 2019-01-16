@@ -27,7 +27,9 @@ public:
     };
 
     //constructor
-    AStarSearch() {}
+    AStarSearch() {
+        Searcher<T>::nodesNumer = 0;
+    }
 
     //calculate "Manhattan" distance - the "pitagorace" of the distance
     double heuristic(State<T> *state, State<T> *goal) {
@@ -36,6 +38,8 @@ public:
 
     //we want to search by this searcher  in the searchable
     string search(ISearchable<T> *Isearchable) {
+        Searcher<T>::nodesNumer=0;
+
         //cost of a specific node from the start
         int costNodeFromStart = 0;
         int pathCost = 0;
@@ -75,7 +79,6 @@ public:
             } else {
 
                 //check if not in the close vector
-                //  if (find(closedVect.begin(), closedVect.end(), state) == closedVect.end()) {
                 //run on all the negibors and add them
                 vector<State<T> *> neighbors = Isearchable->getAllPossibleStates(state);
 
@@ -88,7 +91,7 @@ public:
                     //check if its in the close vector or if the estimated is bigger or equal
                     if ((find(openVect.begin(), openVect.end(), *it) != openVect.end()) ||
                         estimated >= (*it)->getTrailcost()) {
-                        continue; //todo - check if continue
+                        continue;
                     }
 
                     //check if not in the open or g estimated is smaller thrn it know
@@ -111,6 +114,9 @@ public:
                 }
             }
         }
+        std::cout << "TRAIL COST " << Isearchable->getGoalState()->getTrailcost() << std::endl;
+        std::cout << "V Number " << Searcher<T>::nodesNumer << std::endl;
+
         return Isearchable->getRoute();
 
     }

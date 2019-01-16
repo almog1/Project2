@@ -87,10 +87,31 @@ public:
             //read till the /n and returns the lines.s
             line = line + buffer;
 
+            //without /n
+            stringstream temp(line);
+            //create from the line
+            string segment;
+
+
+            //split by "/n"
+//            while (getline(temp, segment, '\n')) {
+//                line = segment;
+//            }
+//
+            //split by "/n"
+            if (getline(temp, segment, '\n')) {
+                line = segment;
+            }
+
+            //buffer = line;
+
             //if we got to the end of the problem
-            if ((strcmp(buffer, "end")) == ZERO) {
+
+            if(line == "end"){
+            //if ((strcmp(buffer, "end")) == ZERO) {
                 break;
             }
+
             //read all lines from the client till got 'end'
             allLines.push_back(line);
 

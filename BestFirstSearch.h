@@ -24,10 +24,14 @@ public:
         }
     };
 
-    BestFirstSearch() {}
+    BestFirstSearch() {
+        Searcher<T>::nodesNumer = 0;
+    }
 
     //we want to search by this searcher  in the searchable
     string search(ISearchable<T> *Isearchable) {
+        Searcher<T>::nodesNumer = 0;
+
         //cost of a specific node from the start
         int costNodeFromStart = 0;
 
@@ -37,8 +41,9 @@ public:
 
         priority_queue<State<T> *, vector<State<T> *>, CompareStateCost> openPriQ; //using the compareator of priority queue
 
-
         State<T> *state = Isearchable->getInitializeState(); //take the first - the init state
+        state->setTrailcost(state->getCost());
+
         typename vector<State<T> *>::iterator it;
         bool isFound = false;
 
@@ -46,6 +51,8 @@ public:
 
         //as long as the queue not empty and didnt found the goal state
         while ((openPriQ.empty() == false) && (isFound == false)) {
+
+            Searcher<T>::nodesNumer++;
 
             //take the first - the one in the front - the minimum
             state = openPriQ.top(); //the first
@@ -71,11 +78,12 @@ public:
                         if (find(openVect.begin(), openVect.end(), *it) == openVect.end()) {
                             //changed the from
                             (*it)->setFrom(state);
+                            (*it)->setTrailcost((*it)->getCost() + state->getTrailcost());
+
                             //take the state and do it in this state
                             openPriQ.push(*it);//push the neigbhor to the queue
                             openVect.push_back(*it); //for not be duplicate
                         }
-                        Searcher<T>::nodesNumer++;
                     }
                     //put the state in the closed vector - the visited
                     closedVect.push_back(state);
@@ -83,8 +91,9 @@ public:
                 }
             }
         }
-        cout << "nodesNumer" << endl;
-        cout << Searcher<T>::nodesNumer << endl;
+        std::cout << "TRAIL COST " << Isearchable->getGoalState()->getTrailcost() << std::endl;
+        std::cout << "V Number " << Searcher<T>::nodesNumer << std::endl;
+
         return Isearchable->getRoute();
 
     }
